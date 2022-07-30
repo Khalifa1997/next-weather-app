@@ -28,7 +28,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
           }
         )
         .then((res) => (x = { uv: res.data.result.uv })).catch((error) => (x = { uv: -1 }));
-        console.log(res.data);
         x = {
           ...x,
           name: res.data.name,
@@ -37,8 +36,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
           humidity: res.data.main.humidity,
           sunset: res.data.sys.sunset+ res.data.timezone,
           sunrise: res.data.sys.sunrise + res.data.timezone,
-          timeOffset: res.data.timezone
+          time: res.data.timezone + res.data.dt
         };
+        
       });
       return {
     props: {
@@ -54,7 +54,7 @@ interface Props {
   humidity: number;
   sunset: number;
   sunrise: number;
-  timeOffset:number;
+  time:number;
 }
 
 const Home: NextPage = ({
@@ -64,7 +64,7 @@ const Home: NextPage = ({
   sunset,
   temp,
   uv,
-  timeOffset,
+  time,
   weather,
 }: Props) => {
   const router = useRouter();
@@ -112,7 +112,7 @@ const Home: NextPage = ({
         alignItems="center"
         flexDirection="column"
       >
-        <WeatherForecast time={timeOffset} day="Hi" temperature={temp} location={name} />
+        <WeatherForecast time={time} day="Hi" temperature={temp} location={name} />
         <SunContainer sunrise={sunrise} sunset={sunset} humidity={humidity} UV={uv}></SunContainer>
       </Box>
     </Box>
