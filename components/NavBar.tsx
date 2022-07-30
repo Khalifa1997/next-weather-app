@@ -11,13 +11,14 @@ import { useEffect, useRef, useState } from "react";
 import { Suggestion } from "../types";
 import InputSuggestions from "./InputSuggestions";
 import useOnClickOutside from "../hooks/useClickOutside";
+import { cleanUpSpecialChars } from "../commons";
 interface Props {
   setInputCity: Function;
 }
 
 const NavBar = ({ setInputCity }: Props) => {
   const [currentCity, setCurrentCity] = useState("");
-  const [suggestions, setSuggestions] = useState([] as suggestion[]);
+  const [suggestions, setSuggestions] = useState([] as Suggestion[]);
 
   const handleChange = async (e: React.FormEvent<HTMLInputElement>) => {
     await setCurrentCity(e.currentTarget.value);
@@ -25,10 +26,11 @@ const NavBar = ({ setInputCity }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     setValue(currentCity);
+    console.log(data)
     setSuggestions(
       data.map((el) => {
         const item: Suggestion = {
-          id: el.structured_formatting.main_text,
+          id: cleanUpSpecialChars(el.structured_formatting.main_text),
           displayName: el.description,
         };
         return item;
@@ -61,6 +63,8 @@ const NavBar = ({ setInputCity }: Props) => {
   } = usePlacesAutocomplete({
     requestOptions: {
       types: ["(cities)"],
+      language: "en",
+      
     },
     debounce: 50,
   });
