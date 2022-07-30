@@ -2,14 +2,15 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 import sunny from "../public/sunny.jpg";
 import Thunderstorm from "../public/Thunderstorm.jpg";
-import rain from "../public/sunny.jpg";
+import rain from "../public/drizzle.jpg";
 
 import { BsSunFill, BsCloudRainFill, BsSnow } from "react-icons/bs";
+import { convertTime } from "../commons";
 interface props {
   weather?: string;
   temperature: number;
   location?: string;
-  time?: string;
+  time?: number;
   day?: string;
 }
 const WeatherForecast = ({
@@ -19,6 +20,8 @@ const WeatherForecast = ({
   time,
   day,
 }: props) => {
+  const dateNow=new Date();
+  
   return (
     <Box
       minH={350}
@@ -52,7 +55,7 @@ const WeatherForecast = ({
         </Box>
         <Box position="absolute" bottom="0px" right="20px" textAlign="right">
           <Text color="whiteAlpha.900" fontSize="2xl" width="100%">
-            7:50 pm
+            {convertTime(time!).hours}:{convertTime(Math.floor(dateNow / 1000)).mins}
           </Text>
           <Text color="whiteAlpha.700" fontSize="2xl">
             Sunset time, Monday
