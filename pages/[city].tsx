@@ -66,7 +66,7 @@ const Home: NextPage = ({
   const router = useRouter();
 
   const [googleApiLoaded, setGoogleApiLoaded] = useState(false);
-  const [city, setCity] = useState(null);
+  const [city, setCity] = useState(name);
   const [long, setLong] = useState("");
   const [lat, setLat] = useState("");
 
