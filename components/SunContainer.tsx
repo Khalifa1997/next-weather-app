@@ -2,15 +2,19 @@ import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
 import React from "react";
 import InfoContainer from "./InfoContainer";
 import { BsWind, BsSunrise, BsSunset, BsSun } from "react-icons/bs";
+import { convertTime } from "../commons";
 
 interface Props {
   humidity: number;
-  sunset: string;
+  sunset: number;
   UV: number;
-  sunrise: string;
+  sunrise: number;
 }
 
 const SunContainer = ({ humidity, UV, sunrise, sunset }: Props) => {
+  const sunriseTime= convertTime(sunrise);
+  const sunsetTime= convertTime(sunset);
+
   return (
     <InfoContainer>
       <Grid
@@ -52,7 +56,7 @@ const SunContainer = ({ humidity, UV, sunrise, sunset }: Props) => {
             />
             <Box ml={4}>
               <Text fontSize="xl">Sunset</Text>
-              <Text as="b">7:00PM</Text>
+              <Text as="b">{sunsetTime.hours}:{sunsetTime.mins}</Text>
             </Box>
           </Flex>
         </GridItem>
@@ -79,7 +83,7 @@ const SunContainer = ({ humidity, UV, sunrise, sunset }: Props) => {
             />
             <Box ml={4}>
               <Text fontSize="xl">Sunrise</Text>
-              <Text as="b">6:00AM</Text>
+              <Text as="b">{sunriseTime.hours}:{sunriseTime.mins}</Text>
             </Box>
           </Flex>
         </GridItem>
