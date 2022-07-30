@@ -21,7 +21,7 @@ const WeatherForecast = ({
   day,
 }: props) => {
   const dateNow=new Date();
-  
+  const dayName =new Date(time*1000).toLocaleString('en-us', {weekday:'long'});
   return (
     <Box
       minH={350}
@@ -58,7 +58,7 @@ const WeatherForecast = ({
             {convertTime(time!).hours}:{convertTime(Math.floor(dateNow / 1000)).mins}
           </Text>
           <Text color="whiteAlpha.700" fontSize="2xl">
-            Sunset time, Monday
+            {dayName}
           </Text>
         </Box>
       </Flex>
