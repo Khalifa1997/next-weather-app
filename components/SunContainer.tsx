@@ -14,6 +14,7 @@ interface Props {
 const SunContainer = ({ humidity, UV, sunrise, sunset }: Props) => {
   const sunriseTime= convertTime(sunrise);
   const sunsetTime= convertTime(sunset);
+  
 
   return (
     <InfoContainer>
@@ -49,14 +50,14 @@ const SunContainer = ({ humidity, UV, sunrise, sunset }: Props) => {
         </GridItem>
         <GridItem h="10">
           <Flex justify="center">
-            <BsSunset
+            <BsSunrise
               style={{ marginTop: "auto", marginBottom: "auto" }}
               size={40}
               color="#6B81FE"
             />
-            <Box ml={4}>
-              <Text fontSize="xl">Sunset</Text>
-              <Text as="b">{sunsetTime.hours}:{sunsetTime.mins}</Text>
+         <Box ml={4}>
+              <Text fontSize="xl">Sunrise</Text>
+              <Text as="b">{sunriseTime.hours}:{sunriseTime.mins}</Text>
             </Box>
           </Flex>
         </GridItem>
@@ -76,16 +77,16 @@ const SunContainer = ({ humidity, UV, sunrise, sunset }: Props) => {
 
         <GridItem h="10">
           <Flex justify="center">
-            <BsSunrise
+            <BsSunset
               style={{ marginTop: "auto", marginBottom: "auto" }}
               size={40}
               color="#6B81FE"
             />
-            <Box ml={4}>
-              <Text fontSize="xl">Sunrise</Text>
-              <Text as="b">{sunriseTime.hours}:{sunriseTime.mins}</Text>
+               <Box ml={4}>
+              <Text fontSize="xl">Sunset</Text>
+              <Text as="b">{sunsetTime.hours}:{sunsetTime.mins}</Text>
             </Box>
-          </Flex>
+            </Flex>
         </GridItem>
       </Grid>
     </InfoContainer>
