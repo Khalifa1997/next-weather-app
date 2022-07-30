@@ -28,7 +28,7 @@ const SunContainer = ({ humidity, UV, sunrise, sunset }: Props) => {
               color="#6B81FE"
             />
 
-            <Box ml={2}>
+            <Box ml={4}>
               <Text fontSize="xl">Humidity</Text>
               <Text as="b">{humidity}%</Text>
             </Box>
@@ -50,7 +50,7 @@ const SunContainer = ({ humidity, UV, sunrise, sunset }: Props) => {
               size={40}
               color="#6B81FE"
             />
-            <Box ml={2}>
+            <Box ml={4}>
               <Text fontSize="xl">Sunset</Text>
               <Text as="b">7:00PM</Text>
             </Box>
@@ -63,9 +63,9 @@ const SunContainer = ({ humidity, UV, sunrise, sunset }: Props) => {
               size={40}
               color="#6B81FE"
             />
-            <Box ml={2}>
+            <Box ml={4}>
               <Text fontSize="xl">UV Index</Text>
-              <Text as="b">{UV}</Text>
+              <Text as="b">{UV.toFixed(2)}</Text>
             </Box>
           </Flex>
         </GridItem>
@@ -77,7 +77,7 @@ const SunContainer = ({ humidity, UV, sunrise, sunset }: Props) => {
               size={40}
               color="#6B81FE"
             />
-            <Box ml={2}>
+            <Box ml={4}>
               <Text fontSize="xl">Sunrise</Text>
               <Text as="b">6:00AM</Text>
             </Box>
