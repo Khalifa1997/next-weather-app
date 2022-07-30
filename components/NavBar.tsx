@@ -26,7 +26,7 @@ const NavBar = ({ setInputCity }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     setValue(currentCity);
-    console.log(data)
+    
     setSuggestions(
       data.map((el) => {
         const item: Suggestion = {
