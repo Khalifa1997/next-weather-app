@@ -7,9 +7,9 @@ import SunContainer from "../components/SunContainer";
 import WeatherForecast from "../components/WeatherForecast";
 import Script from "next/script";
 import { useEffect, useState } from "react";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 
-export const getServerSideProps: GetServerSideProps = async ({params}) =>  {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   let x: {};
   await axios
     .get(
@@ -43,7 +43,7 @@ export const getServerSideProps: GetServerSideProps = async ({params}) =>  {
       ...x!,
     },
   };
-}
+};
 interface Props {
   uv: number;
   name: string;
@@ -63,13 +63,32 @@ const Home: NextPage = ({
   uv,
   weather,
 }: Props) => {
-  const router = useRouter()
+  const router = useRouter();
 
   const [googleApiLoaded, setGoogleApiLoaded] = useState(false);
   const [city, setCity] = useState(null);
+  const [long, setLong] = useState("");
+  const [lat, setLat] = useState("");
+
+  function success(pos: GeolocationPosition) {
+    const crd = pos.coords;
+
+    console.log("Your current position is:");
+    setLong(crd.longitude.toString());
+    setLat(crd.latitude.toString());
+  }
+
   useEffect(() => {
-    if(city)
-   router.push(`/${city}`)
+    navigator.geolocation.getCurrentPosition(success);
+    axios
+      .get(
+        `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${long}&key=7f097a9f2db9466c9701377cc2733764`
+      )
+      .then((res) => setCity(res.data.results[0].components.city));
+  }, [long, lat]);
+
+  useEffect(() => {
+    if (city) router.push(`/${city}`);
   }, [city]);
 
   return (
