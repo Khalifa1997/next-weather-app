@@ -27,18 +27,19 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
             },
           }
         )
-        .then((res) => (x = { uv: res.data.result.uv }));
-      x = {
-        ...x,
-        name: res.data.name,
-        weather: res.data.weather,
-        temp: res.data.main.temp,
-        humidity: res.data.main.humidity,
-        sunset: res.data.sys.sunset,
-        sunrise: res.data.sys.sunrise,
-      };
-    });
-  return {
+        .then((res) => (x = { uv: res.data.result.uv })).catch((error) => (x = { uv: -1 }));
+        console.log(res.data);
+        x = {
+          ...x,
+          name: res.data.name,
+          weather: res.data.weather,
+          temp: res.data.main.temp,
+          humidity: res.data.main.humidity,
+          sunset: res.data.sys.sunset,
+          sunrise: res.data.sys.sunrise,
+        };
+      });
+      return {
     props: {
       ...x!,
     },
@@ -69,26 +70,27 @@ const Home: NextPage = ({
   const [city, setCity] = useState(name);
   const [long, setLong] = useState("");
   const [lat, setLat] = useState("");
+  
 
   function success(pos: GeolocationPosition) {
     const crd = pos.coords;
-
-    console.log("Your current position is:");
     setLong(crd.longitude.toString());
     setLat(crd.latitude.toString());
   }
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success);
+    
     axios
       .get(
         `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${long}&key=7f097a9f2db9466c9701377cc2733764`
       )
-      .then((res) => setCity(res.data.results[0].components.city));
+      .then((res) => {setCity(res.data.results[0].components.city)});
   }, [long, lat]);
 
   useEffect(() => {
     if (city) router.push(`/${city}`);
+
   }, [city]);
 
   return (
@@ -107,8 +109,8 @@ const Home: NextPage = ({
         alignItems="center"
         flexDirection="column"
       >
-        <WeatherForecast day="Hi" temperature={temp} location={name} />
-        <SunContainer humidity={humidity} UV={uv}></SunContainer>
+        <WeatherForecast time="" day="Hi" temperature={temp} location={name} />
+        <SunContainer sunrise={sunrise} sunset={sunset} humidity={humidity} UV={uv}></SunContainer>
       </Box>
     </Box>
   );
