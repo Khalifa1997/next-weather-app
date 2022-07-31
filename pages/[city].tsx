@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     },
   };
 };
-interface Props {
+type Props=  {
   uv: number;
   name: string;
   weather: Array<string>;

@@ -4,7 +4,7 @@ import InfoContainer from "./InfoContainer";
 import { BsWind, BsSunrise, BsSunset, BsSun } from "react-icons/bs";
 import { convertTime } from "../commons";
 
-interface Props {
+type Props = {
   humidity: number;
   sunset: number;
   UV: number;

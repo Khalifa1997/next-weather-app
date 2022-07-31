@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { suggestion } from "./NavBar";
 
-interface Props {
+type Props= {
   items: Array<suggestion>;
   onSelect: Function;
 }

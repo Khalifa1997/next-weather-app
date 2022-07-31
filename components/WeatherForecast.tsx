@@ -6,7 +6,7 @@ import rain from "../public/drizzle.jpg";
 
 import { BsSunFill, BsCloudRainFill, BsSnow } from "react-icons/bs";
 import { convertTime } from "../commons";
-interface props {
+type Props=  {
   weather?: string;
   temperature: number;
   location?: string;
@@ -19,13 +19,13 @@ const WeatherForecast = ({
   location,
   time,
   day,
-}: props) => {
+}: Props) => {
   const dateNow=new Date();
-  const dayName =new Date(time*1000).toLocaleString('en-us', {weekday:'long'});
+  const dayName =new Date(time!*1000).toLocaleString('en-us', {weekday:'long'});
   return (
     <Box
-      minH={350}
-      maxH={400}
+      minH={450}
+      maxH={700}
       bgColor="primary.f9f8fe"
       w="95%"
       backgroundRepeat="no-repeat"

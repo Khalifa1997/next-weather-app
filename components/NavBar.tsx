@@ -12,7 +12,7 @@ import { Suggestion } from "../types";
 import InputSuggestions from "./InputSuggestions";
 import useOnClickOutside from "../hooks/useClickOutside";
 import { cleanUpSpecialChars } from "../commons";
-interface Props {
+type Props = {
   setInputCity: Function;
 }
 
@@ -98,6 +98,7 @@ const NavBar = ({ setInputCity }: Props) => {
           />
         )}
         <Input
+  
           placeholder="Enter City Name"
           onChange={handleChange}
           onKeyDown={handleKeyDown}
