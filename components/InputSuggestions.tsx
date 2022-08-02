@@ -1,8 +1,9 @@
 import { Box } from "@chakra-ui/react";
-import { suggestion } from "./NavBar";
+import { Suggestion } from "../types";
+
 
 type Props= {
-  items: Array<suggestion>;
+  items: Array<Suggestion>;
   onSelect: Function;
 }
 const InputSuggestions = ({ items, onSelect }: Props) => {
