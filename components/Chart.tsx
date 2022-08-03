@@ -1,6 +1,6 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,6 +13,7 @@ import {
   Filler,
   ChartOptions,
 } from "chart.js";
+import WeatherIconPicker from "./WeatherIconPicker";
 
 ChartJS.register(
   CategoryScale,
@@ -31,8 +32,24 @@ type Props = {
       time: string;
     }
   ];
+  dailyWeather?: [
+    {
+      temp: number;
+      time: number;
+      condition?: string;
+    }
+  ];
 };
-const Chart = ({ hourlyWeather }: Props) => {
+const Chart = ({ hourlyWeather, dailyWeather }: Props) => {
+  const weekday = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
   const data = {
     labels: hourlyWeather?.map((el) => el.time),
     datasets: [
@@ -97,6 +114,29 @@ const Chart = ({ hourlyWeather }: Props) => {
       bgColor="primary.f9f8fe"
     >
       <Line data={data} options={lineOptions} />
+      <Flex direction="row" justifyContent="space-around" alignItems="center">
+        {dailyWeather?.map((el, idx) => (
+          <>
+            <Flex
+              direction="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <div>{weekday[new Date(el.time * 1000).getDay()]}</div>
+              <WeatherIconPicker condition={el.condition} />
+              <div>{el.temp + " °C"}</div>
+            </Flex>
+            {idx !== dailyWeather.length - 1 && (
+              <Box
+                height={[5, 8, 12]}
+                borderLeft="2px"
+                width={3}
+                borderColor="gray.400"
+              ></Box>
+            )}
+          </>
+        ))}
+      </Flex>
     </Box>
   );
 };
