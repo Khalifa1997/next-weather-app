@@ -12,6 +12,8 @@ import {
   Legend,
   Filler,
   ChartOptions,
+  ChartData,
+  BarControllerChartOptions,
 } from "chart.js";
 import WeatherIconPicker from "./WeatherIconPicker";
 
@@ -50,14 +52,12 @@ const Chart = ({ hourlyWeather, dailyWeather }: Props) => {
     "Friday",
     "Saturday",
   ];
-  const data = {
+  const data: ChartData<"line"> = {
     labels: hourlyWeather?.map((el) => el.time),
     datasets: [
       {
         label: "Weather Forecast",
         fill: true,
-
-        lineTension: 0.1,
         backgroundColor: "#D6DAFE",
         borderColor: "#7D90FE",
         borderCapStyle: "butt",
@@ -73,12 +73,12 @@ const Chart = ({ hourlyWeather, dailyWeather }: Props) => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: hourlyWeather?.map((el) => el.temp),
+        data: hourlyWeather?.map((el) => el.temp)!,
       },
     ],
   };
 
-  const lineOptions: ChartOptions = {
+  const lineOptions: ChartOptions<"line"> = {
     plugins: {
       legend: {
         labels: {
