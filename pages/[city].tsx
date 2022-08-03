@@ -33,11 +33,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
           }
         )
         .then((res) => (x = { ...x, uv: res.data.result.uv }))
-        .catch((error) => (x = { ...x, uv: -1 }));
-      hourlyWeather = await res.data.list.splice(1, 7).map((el: any) => {
-        time: el.dt_txt;
-        temp: el.main.temp;
-      });
+        .catch(() => (x = { ...x, uv: -1 }));
       x = {
         ...x,
         name: res.data.city.name,
@@ -46,8 +42,8 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         humidity: res.data.list[0].main.humidity,
         sunset: res.data.city.sunset + res.data.city.timezone,
         sunrise: res.data.city.sunrise + res.data.city.timezone,
-        time: res.data.city.timezone + res.data.list[0].dt,
-        hourlyWeather: res.data.list.splice(2, 8).map((el: any) => {
+        time: res.data.city.timezone + res.data.list[0].dt * 100,
+        hourlyWeather: res.data.list.slice(2, 8).map((el: any) => {
           return {
             time: el.dt_txt.split(" ")[1],
             temp: el.main.temp.toFixed(1),
@@ -57,29 +53,19 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
           .filter((el: any) => el.dt_txt.includes("12:00:00"))
           .map((el: any) => {
             return {
-              time: el.dt_txt.split(" ")[0],
-              temp: el.main.temp,
+              time: el.dt,
+              //time: el.dt_txt.split(" ")[0],
+              temp: el.main.temp.toFixed(1),
               condition: el.weather[0].main,
             };
           }),
       };
-      console.log(x.dailyWeather);
     });
   return {
     props: {
       ...x!,
     },
   };
-};
-type Props = {
-  uv: number;
-  name: string;
-  weather: Array<string>;
-  temp: number;
-  humidity: number;
-  sunset: number;
-  sunrise: number;
-  time: number;
 };
 
 const Home: NextPage = ({
@@ -91,6 +77,7 @@ const Home: NextPage = ({
   uv,
   time,
   hourlyWeather,
+  dailyWeather,
 }: Forecast) => {
   const router = useRouter();
 
@@ -143,6 +130,7 @@ const Home: NextPage = ({
           temperature={temp}
           location={name}
         />
+
         <Flex
           direction="row"
           justifyContent="space-between"
@@ -156,7 +144,7 @@ const Home: NextPage = ({
             humidity={humidity!}
             UV={uv!}
           ></SunContainer>
-          <Chart hourlyWeather={hourlyWeather!} />
+          <Chart hourlyWeather={hourlyWeather!} dailyWeather={dailyWeather!} />
         </Flex>
       </Box>
     </Box>
