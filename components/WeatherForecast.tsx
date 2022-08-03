@@ -6,13 +6,13 @@ import rain from "../public/drizzle.jpg";
 
 import { BsSunFill, BsCloudRainFill, BsSnow } from "react-icons/bs";
 import { convertTime } from "../commons";
-type Props=  {
+type Props = {
   weather?: string;
   temperature: number;
   location?: string;
   time?: number;
   day?: string;
-}
+};
 const WeatherForecast = ({
   weather,
   temperature,
@@ -20,8 +20,10 @@ const WeatherForecast = ({
   time,
   day,
 }: Props) => {
-  const dateNow=new Date();
-  const dayName =new Date(time!*1000).toLocaleString('en-us', {weekday:'long'});
+  const dateNow = new Date();
+  const dayName = new Date(time! * 1000).toLocaleString("en-us", {
+    weekday: "long",
+  });
   return (
     <Box
       minH={450}
@@ -55,7 +57,8 @@ const WeatherForecast = ({
         </Box>
         <Box position="absolute" bottom="0px" right="20px" textAlign="right">
           <Text color="whiteAlpha.900" fontSize="2xl" width="100%">
-            {convertTime(time!).hours}:{convertTime(Math.floor(dateNow / 1000)).mins}
+            {convertTime(time!).hours}:
+            {convertTime(Math.floor(Date.now() / 1000)).mins}
           </Text>
           <Text color="whiteAlpha.700" fontSize="2xl">
             {dayName}
