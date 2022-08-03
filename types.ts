@@ -25,7 +25,7 @@ export interface Forecast extends Weather {
   dailyWeather?: [
     {
       temp: number;
-      time: string;
+      time: number;
       condition?: string;
     }
   ];
