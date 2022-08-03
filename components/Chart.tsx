@@ -131,7 +131,7 @@ const Chart = ({ hourlyWeather, dailyWeather }: Props) => {
                 height={[5, 8, 12]}
                 borderLeft="2px"
                 width={3}
-                borderColor="gray.400"
+                borderColor="gray.300"
               ></Box>
             )}
           </>
