@@ -9,11 +9,11 @@ import Script from "next/script";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Chart from "../components/Chart";
-import { Weather } from "../types";
+import { Forecast, Weather } from "../types";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  let x = {} as Weather;
-  let hourlyWeather: [{temp:number,time:string}];
+  let x = {} as Forecast;
+  let hourlyWeather: [{ temp: number; time: string }];
   await axios
     .get(
       `https://api.openweathermap.org/data/2.5/forecast?q=${
@@ -34,9 +34,10 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         )
         .then((res) => (x = { ...x, uv: res.data.result.uv }))
         .catch((error) => (x = { ...x, uv: -1 }));
-        hourlyWeather = await res.data.list.splice(1, 7).map((el) => {
-          time:el.dt_txt
-          temp:el.main.temp})
+      hourlyWeather = await res.data.list.splice(1, 7).map((el: any) => {
+        time: el.dt_txt;
+        temp: el.main.temp;
+      });
       x = {
         ...x,
         name: res.data.city.name,
@@ -46,13 +47,23 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         sunset: res.data.city.sunset + res.data.city.timezone,
         sunrise: res.data.city.sunrise + res.data.city.timezone,
         time: res.data.city.timezone + res.data.list[0].dt,
-        hourlyWeather: res.data.list.splice(2, 8).map((el) => {
-          
+        hourlyWeather: res.data.list.splice(2, 8).map((el: any) => {
           return {
-          time:el.dt_txt.split(" ")[1],
-          temp:el.main.temp}}),
+            time: el.dt_txt.split(" ")[1],
+            temp: el.main.temp.toFixed(1),
+          };
+        }),
+        dailyWeather: res.data.list
+          .filter((el: any) => el.dt_txt.includes("12:00:00"))
+          .map((el: any) => {
+            return {
+              time: el.dt_txt.split(" ")[0],
+              temp: el.main.temp,
+              condition: el.weather[0].main,
+            };
+          }),
       };
-      
+      console.log(x.dailyWeather);
     });
   return {
     props: {
@@ -80,7 +91,7 @@ const Home: NextPage = ({
   uv,
   time,
   hourlyWeather,
-}: Weather) => {
+}: Forecast) => {
   const router = useRouter();
 
   const [googleApiLoaded, setGoogleApiLoaded] = useState(false);

@@ -13,10 +13,20 @@ export interface Weather {
   sunset?: number;
   sunrise?: number;
   time: number;
+}
+
+export interface Forecast extends Weather {
   hourlyWeather?: [
     {
       temp: number;
       time: string;
+    }
+  ];
+  dailyWeather?: [
+    {
+      temp: number;
+      time: string;
+      condition?: string;
     }
   ];
 }
