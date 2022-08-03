@@ -114,7 +114,12 @@ const Chart = ({ hourlyWeather, dailyWeather }: Props) => {
       bgColor="primary.f9f8fe"
     >
       <Line data={data} options={lineOptions} />
-      <Flex direction="row" justifyContent="space-around" alignItems="center">
+      <Flex
+        direction="row"
+        justifyContent="space-around"
+        alignItems="center"
+        marginY={6}
+      >
         {dailyWeather?.map((el, idx) => (
           <>
             <Flex
@@ -122,9 +127,13 @@ const Chart = ({ hourlyWeather, dailyWeather }: Props) => {
               alignItems="center"
               justifyContent="center"
             >
-              <div>{weekday[new Date(el.time * 1000).getDay()]}</div>
+              <Box marginBottom={5} textAlign="center">
+                {weekday[new Date(el.time * 1000).getDay() % 7]}
+              </Box>
               <WeatherIconPicker condition={el.condition} />
-              <div>{el.temp + " °C"}</div>
+              <Box marginTop={5} textAlign="center">
+                {el.temp + " °C"}
+              </Box>
             </Flex>
             {idx !== dailyWeather.length - 1 && (
               <Box
