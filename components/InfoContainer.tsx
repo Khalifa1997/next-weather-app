@@ -1,10 +1,10 @@
 import { Box } from "@chakra-ui/react";
 import React, { ReactNode } from "react";
-type Props ={
+type Props = {
   children?: ReactNode;
   bgColor?: string;
   padding?: number;
-}
+};
 
 const InfoContainer = ({
   children,
