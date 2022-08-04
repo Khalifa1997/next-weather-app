@@ -1,6 +1,9 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+import { Context } from "chartjs-plugin-datalabels";
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,9 +16,9 @@ import {
   Filler,
   ChartOptions,
   ChartData,
-  BarControllerChartOptions,
 } from "chart.js";
 import WeatherIconPicker from "./WeatherIconPicker";
+import { weekday } from "../commons";
 
 ChartJS.register(
   CategoryScale,
@@ -25,7 +28,8 @@ ChartJS.register(
   Title,
   Tooltip,
   Filler,
-  Legend
+  Legend,
+  ChartDataLabels
 );
 type Props = {
   hourlyWeather?: [
@@ -43,35 +47,36 @@ type Props = {
   ];
 };
 const Chart = ({ hourlyWeather, dailyWeather }: Props) => {
-  const weekday = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
+  const labels = hourlyWeather?.map((el) => el.time);
+
   const data: ChartData<"line"> = {
-    labels: hourlyWeather?.map((el) => el.time),
+    labels: labels,
     datasets: [
       {
+        tension: 0.5,
         label: "Weather Forecast",
         fill: true,
         backgroundColor: "#D6DAFE",
         borderColor: "#7D90FE",
+
         borderCapStyle: "butt",
         borderDash: [],
         borderDashOffset: 0.0,
         borderJoinStyle: "miter",
         pointBorderColor: "#7D90FE",
         pointBackgroundColor: "#fff",
-        pointBorderWidth: 1,
-        pointHoverRadius: 5,
+        pointBorderWidth: 5,
+        pointHoverRadius(ctx) {
+          if (ctx.dataIndex === 0) return 0;
+          return 5;
+        },
         pointHoverBackgroundColor: "#7D90FE",
         pointHoverBorderColor: "rgba(220,220,220,1)",
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
+        pointHoverBorderWidth: 3,
+        pointRadius(ctx) {
+          if (ctx.dataIndex === 0) return 0;
+          return 1;
+        },
         pointHitRadius: 10,
         data: hourlyWeather?.map((el) => el.temp)!,
       },
@@ -80,14 +85,49 @@ const Chart = ({ hourlyWeather, dailyWeather }: Props) => {
 
   const lineOptions: ChartOptions<"line"> = {
     plugins: {
+      datalabels: {
+        display: function (context) {
+          return context.dataIndex !== 0;
+        },
+        align: "end",
+        anchor: "end",
+        color: "#aeadb1",
+      },
+      tooltip: {
+        displayColors: false,
+        filter(e, index, array, data) {
+          if (array[index].dataIndex === 0) return false;
+          return true;
+        },
+        callbacks: {
+          label: function (context) {
+            return "Temperature: " + context.parsed.y + "°C";
+          },
+        },
+      },
       legend: {
         labels: {
           boxWidth: 0,
         },
       },
     },
+
     scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+        ticks: {
+          callback(tickValue, index, ticks) {
+            if (index === 0) return "";
+            return labels![index];
+          },
+        },
+      },
       y: {
+        grid: {
+          display: false,
+        },
         min:
           Math.round(Math.min(...hourlyWeather!.map((o) => o.temp)) / 5) * 5 -
           5,
@@ -107,7 +147,7 @@ const Chart = ({ hourlyWeather, dailyWeather }: Props) => {
       fontFamily="sans-serif"
       textAlign="center"
       bg="white"
-      width="800px"
+      width="700px"
       borderRadius={6}
       border="2px"
       borderColor="gray.400"
@@ -118,7 +158,8 @@ const Chart = ({ hourlyWeather, dailyWeather }: Props) => {
         direction="row"
         justifyContent="space-around"
         alignItems="center"
-        marginY={6}
+        marginY={8}
+        marginX={8}
       >
         {dailyWeather?.map((el, idx) => (
           <>
@@ -127,17 +168,22 @@ const Chart = ({ hourlyWeather, dailyWeather }: Props) => {
               alignItems="center"
               justifyContent="center"
             >
-              <Box marginBottom={5} textAlign="center">
+              <Text
+                marginBottom={5}
+                fontSize="larger"
+                textAlign="center"
+                color="blackAlpha.700"
+              >
                 {weekday[new Date(el.time * 1000).getDay() % 7]}
-              </Box>
+              </Text>
               <WeatherIconPicker condition={el.condition} />
-              <Box marginTop={5} textAlign="center">
+              <Text as="b" fontSize="large" marginTop={5} textAlign="center">
                 {el.temp + " °C"}
-              </Box>
+              </Text>
             </Flex>
             {idx !== dailyWeather.length - 1 && (
               <Box
-                height={[5, 8, 12]}
+                height={[5, 8, 20]}
                 borderLeft="2px"
                 width={3}
                 borderColor="gray.300"
