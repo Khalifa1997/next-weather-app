@@ -9,11 +9,10 @@ import Script from "next/script";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Chart from "../components/Chart";
-import { Forecast, Weather } from "../types";
+import { Forecast } from "../types";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   let x = {} as Forecast;
-  let hourlyWeather: [{ temp: number; time: string }];
   await axios
     .get(
       `https://api.openweathermap.org/data/2.5/forecast?q=${
@@ -42,10 +41,10 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         humidity: res.data.list[0].main.humidity,
         sunset: res.data.city.sunset + res.data.city.timezone,
         sunrise: res.data.city.sunrise + res.data.city.timezone,
-        time: res.data.city.timezone + res.data.list[0].dt * 100,
-        hourlyWeather: res.data.list.slice(2, 8).map((el: any) => {
+        time: res.data.list[0].dt,
+        hourlyWeather: res.data.list.slice(1, 8).map((el: any) => {
           return {
-            time: el.dt_txt.split(" ")[1],
+            time: el.dt_txt.split(" ")[1].slice(0, -3),
             temp: el.main.temp.toFixed(1),
           };
         }),
@@ -55,7 +54,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
             return {
               time: el.dt,
               //time: el.dt_txt.split(" ")[0],
-              temp: el.main.temp.toFixed(1),
+              temp: el.main.temp.toFixed(0),
               condition: el.weather[0].main,
             };
           }),
@@ -68,7 +67,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   };
 };
 
-const Home: NextPage = ({
+const Home: NextPage<Forecast> = ({
   humidity,
   name,
   sunrise,
@@ -124,12 +123,7 @@ const Home: NextPage = ({
         alignItems="center"
         flexDirection="column"
       >
-        <WeatherForecast
-          time={time}
-          day="Hi"
-          temperature={temp}
-          location={name}
-        />
+        <WeatherForecast time={time} temperature={temp} location={name} />
 
         <Flex
           direction="row"
