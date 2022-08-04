@@ -1,5 +1,5 @@
 import { BsSearch, BsX } from "react-icons/bs";
-import usePlacesAutocomplete from "use-places-autocomplete";
+import usePlacesAutocomplete, { getGeocode } from "use-places-autocomplete";
 import {
   Text,
   Flex,
@@ -14,7 +14,7 @@ import useOnClickOutside from "../hooks/useClickOutside";
 import { cleanUpSpecialChars } from "../commons";
 type Props = {
   setInputCity: Function;
-}
+};
 
 const NavBar = ({ setInputCity }: Props) => {
   const [currentCity, setCurrentCity] = useState("");
@@ -26,9 +26,13 @@ const NavBar = ({ setInputCity }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     setValue(currentCity);
-    
+
     setSuggestions(
       data.map((el) => {
+        /*      getGeocode({ address: el.description }).then((results) => {
+          const { lat, lng } = getLatLng(results[0]);
+          console.log("📍 Coordinates: ", { lat, lng });
+        }); */
         const item: Suggestion = {
           id: cleanUpSpecialChars(el.structured_formatting.main_text),
           displayName: el.description,
@@ -64,7 +68,6 @@ const NavBar = ({ setInputCity }: Props) => {
     requestOptions: {
       types: ["(cities)"],
       language: "en",
-      
     },
     debounce: 50,
   });
@@ -98,7 +101,6 @@ const NavBar = ({ setInputCity }: Props) => {
           />
         )}
         <Input
-  
           placeholder="Enter City Name"
           onChange={handleChange}
           onKeyDown={handleKeyDown}
