@@ -1,7 +1,7 @@
 export const convertTime = (timeStamp: number) => {
   const date = new Date(timeStamp * 1000);
-  const hours = date.getUTCHours().toString();
-  const mins = date.getUTCMinutes().toString();
+  const hours = date.getHours().toString();
+  const mins = date.getMinutes().toString();
 
   return {
     hours: hours.length === 1 ? "0" + hours : hours,
@@ -276,3 +276,12 @@ export const cleanUpSpecialChars = (str: string) => {
 
   return str;
 };
+export const weekday = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
