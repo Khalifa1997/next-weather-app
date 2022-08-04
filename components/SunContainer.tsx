@@ -9,12 +9,11 @@ type Props = {
   sunset: number;
   UV: number;
   sunrise: number;
-}
+};
 
 const SunContainer = ({ humidity, UV, sunrise, sunset }: Props) => {
-  const sunriseTime= convertTime(sunrise);
-  const sunsetTime= convertTime(sunset);
-  
+  const sunriseTime = convertTime(sunrise);
+  const sunsetTime = convertTime(sunset);
 
   return (
     <InfoContainer>
@@ -24,6 +23,7 @@ const SunContainer = ({ humidity, UV, sunrise, sunset }: Props) => {
         columnGap={4}
         alignItems="center"
         justifyContent="center"
+        minHeight={200}
       >
         <GridItem h="10">
           <Flex justify="center">
@@ -42,10 +42,10 @@ const SunContainer = ({ humidity, UV, sunrise, sunset }: Props) => {
         <GridItem rowSpan={2} width={4}>
           <Box
             m="auto"
-            height={[50, 100, 200]}
-            borderLeft="2px"
+            height={[50, 100, 150]}
+            borderLeft="1px"
             width={3}
-            borderColor="gray.400"
+            borderColor="gray.300"
           ></Box>
         </GridItem>
         <GridItem h="10">
@@ -55,9 +55,11 @@ const SunContainer = ({ humidity, UV, sunrise, sunset }: Props) => {
               size={40}
               color="#6B81FE"
             />
-         <Box ml={4}>
+            <Box ml={4}>
               <Text fontSize="xl">Sunrise</Text>
-              <Text as="b">{sunriseTime.hours}:{sunriseTime.mins}</Text>
+              <Text as="b">
+                {sunriseTime.hours}:{sunriseTime.mins}
+              </Text>
             </Box>
           </Flex>
         </GridItem>
@@ -82,11 +84,13 @@ const SunContainer = ({ humidity, UV, sunrise, sunset }: Props) => {
               size={40}
               color="#6B81FE"
             />
-               <Box ml={4}>
+            <Box ml={4}>
               <Text fontSize="xl">Sunset</Text>
-              <Text as="b">{sunsetTime.hours}:{sunsetTime.mins}</Text>
+              <Text as="b">
+                {sunsetTime.hours}:{sunsetTime.mins}
+              </Text>
             </Box>
-            </Flex>
+          </Flex>
         </GridItem>
       </Grid>
     </InfoContainer>
