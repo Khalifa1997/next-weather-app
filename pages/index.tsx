@@ -17,6 +17,8 @@ import bg from "../public/bacakground.png";
 
 const Index = () => {
   const [show, setShow] = useState(false);
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const handlePasswordClick = () => {
     setShow((state) => !state);
   };
@@ -32,16 +34,18 @@ const Index = () => {
       </Head>
       <Box
         backgroundImage={`url(${bg.src})`}
-        backgroundSize="cover"
+        backgroundSize="100% 100%"
         backgroundRepeat="no-repeat"
-        height="100%"
-        width="55%"
+        width="100%"
+        maxWidth="55%"
+        display={["none", "none", "block"]}
+        height="auto"
       ></Box>
       <Flex
+        marginY="auto"
+        mr="auto"
+        ml={["auto", "auto", "20px"]}
         direction="column"
-        position="absolute"
-        left="55%"
-        top="20%"
         backgroundColor="#fefefe"
       >
         <Text textAlign="center" fontSize="4xl">
@@ -51,13 +55,22 @@ const Index = () => {
           <Text textAlign="left" fontSize="medium" marginY="2">
             Email
           </Text>
-          <Input borderRadius="20px" htmlSize={40} width="auto" type="email" />
+          <Input
+            borderRadius="20px"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            htmlSize={40}
+            width="auto"
+            type="email"
+          />
           <Text textAlign="left" fontSize="medium" marginY="2">
             Password
           </Text>
           <InputGroup>
             <Input
               borderRadius="20px"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               type={show ? "text" : "password"}
               htmlSize={40}
               width="auto"
