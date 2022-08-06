@@ -162,7 +162,7 @@ const Chart = ({ hourlyWeather, dailyWeather }: Props) => {
         marginX={8}
       >
         {dailyWeather?.map((el, idx) => (
-          <>
+          <React.Fragment key={idx}>
             <Flex
               direction="column"
               alignItems="center"
@@ -189,7 +189,7 @@ const Chart = ({ hourlyWeather, dailyWeather }: Props) => {
                 borderColor="gray.300"
               ></Box>
             )}
-          </>
+          </React.Fragment>
         ))}
       </Flex>
     </Box>
