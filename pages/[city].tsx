@@ -10,9 +10,13 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Chart from "../components/Chart";
 import { Forecast } from "../types";
+import { useSession } from "next-auth/react";
+import { unstable_getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]";
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   let x = {} as Forecast;
+  const { params } = context;
   await axios
     .get(
       `https://api.openweathermap.org/data/2.5/forecast?q=${
@@ -62,6 +66,11 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     });
   return {
     props: {
+      session: await unstable_getServerSession(
+        context.req,
+        context.res,
+        authOptions
+      ),
       ...x!,
     },
   };
@@ -79,7 +88,7 @@ const Home: NextPage<Forecast> = ({
   dailyWeather,
 }: Forecast) => {
   const router = useRouter();
-
+  const { data } = useSession();
   const [googleApiLoaded, setGoogleApiLoaded] = useState(false);
   const [city, setCity] = useState(name);
   const [long, setLong] = useState("");
@@ -105,9 +114,11 @@ const Home: NextPage<Forecast> = ({
   }, [long, lat]);
 
   useEffect(() => {
+    console.log(data);
     if (city) router.push(`/${city}`);
   }, [city]);
   const googleMapsAPI = `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API}&libraries=places`;
+  if (!data) return <p>Not Signed In Page</p>;
   return (
     <Box bgColor="primary.100" height="100vh">
       <Head>
