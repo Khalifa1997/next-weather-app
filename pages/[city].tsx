@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     .get(
       `https://api.openweathermap.org/data/2.5/forecast?q=${
         params!.city
-      }&units=metric&appid=009b0829f9d39cebc103cc0e0ca5be55`
+      }&units=metric&appid=${process.env.OPEN_WEATHER_API}`
     )
     .then(async (res) => {
       await axios
@@ -27,7 +27,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
           )}&lng=${res.data.city.coord.lon.toFixed(2)}`,
           {
             headers: {
-              "x-access-token": "cb510185a58fe889ca8ee09a07c585bf",
+              "x-access-token": `${process.env.OPEN_UV_API}`,
             },
           }
         )
@@ -96,7 +96,7 @@ const Home: NextPage<Forecast> = ({
 
     axios
       .get(
-        `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${long}&key=7f097a9f2db9466c9701377cc2733764`
+        `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${long}&key=${process.env.OPEN_CAGE_API}`
       )
       .then((res) => {
         setCity(res.data.results[0].components.city);
@@ -106,14 +106,14 @@ const Home: NextPage<Forecast> = ({
   useEffect(() => {
     if (city) router.push(`/${city}`);
   }, [city]);
-
+  const googleMapsAPI = `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API}&libraries=places`;
   return (
     <Box bgColor="primary.100" height="100vh">
       <Head>
         <title>AccuWeather - {city}</title>
       </Head>
       <Script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVRVQQTQTN0mJtCCc107i_z1XfkEFE658&libraries=places"
+        src={googleMapsAPI}
         onLoad={() => setGoogleApiLoaded(true)}
       ></Script>
       {googleApiLoaded && <NavBar setInputCity={setCity} />}
