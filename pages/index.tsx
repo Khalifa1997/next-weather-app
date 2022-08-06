@@ -1,0 +1,123 @@
+import {
+  Box,
+  Flex,
+  Text,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Button,
+  Checkbox,
+  Divider,
+  HStack,
+} from "@chakra-ui/react";
+import Head from "next/head";
+import React, { useState } from "react";
+import { BsFacebook, BsGithub, BsGoogle, BsTwitter } from "react-icons/bs";
+import bg from "../public/bacakground.png";
+
+const Index = () => {
+  const [show, setShow] = useState(false);
+  const handlePasswordClick = () => {
+    setShow((state) => !state);
+  };
+  return (
+    <Flex
+      height="100vh"
+      width="100vw"
+      position="relative"
+      backgroundColor="#fefefe"
+    >
+      <Head>
+        <title>Home</title>
+      </Head>
+      <Box
+        backgroundImage={`url(${bg.src})`}
+        backgroundSize="cover"
+        backgroundRepeat="no-repeat"
+        height="100%"
+        width="55%"
+      ></Box>
+      <Flex
+        direction="column"
+        position="absolute"
+        left="55%"
+        top="20%"
+        backgroundColor="#fefefe"
+      >
+        <Text textAlign="center" fontSize="4xl">
+          Log in
+        </Text>
+        <Flex direction="column">
+          <Text textAlign="left" fontSize="medium" marginY="2">
+            Email
+          </Text>
+          <Input borderRadius="20px" htmlSize={40} width="auto" type="email" />
+          <Text textAlign="left" fontSize="medium" marginY="2">
+            Password
+          </Text>
+          <InputGroup>
+            <Input
+              borderRadius="20px"
+              type={show ? "text" : "password"}
+              htmlSize={40}
+              width="auto"
+            />
+            <InputRightElement width="4.5rem">
+              <Button h="1.5rem" size="xs" onClick={handlePasswordClick}>
+                {show ? "Hide" : "Show"}
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+          <Button
+            size="lg"
+            mt="40px"
+            backgroundColor="#006eb9"
+            borderRadius="20px"
+            color="#f7fdfb"
+            _hover={{ bg: "#1193ec" }}
+            _active={{
+              bg: "#1193ec",
+              transform: "scale(0.95)",
+            }}
+            _focus={{
+              boxShadow:
+                "0 0 1px 2px rgba(88, 144, 255, .75), 0 1px 1px rgba(0, 0, 0, .15)",
+            }}
+          >
+            Login
+          </Button>
+          <Flex
+            gap="40px"
+            justifyContent="center"
+            alignItems="center"
+            mt="25px"
+          >
+            <Checkbox ml="20px" size="md">
+              Keep me logged in
+            </Checkbox>
+            <Text mr="20px" color="#5f9fcf">
+              Forgot Password or Email?
+            </Text>
+          </Flex>
+          <Flex align="center">
+            <Divider />
+            <Text padding="2" width="300px">
+              Or Login With
+            </Text>
+            <Divider />
+          </Flex>
+          <HStack marginX="auto">
+            <Button variant="outline" leftIcon={<BsGoogle />}>
+              Google
+            </Button>
+            <Button variant="outline" leftIcon={<BsGithub />}>
+              Github
+            </Button>
+          </HStack>
+        </Flex>
+      </Flex>
+    </Flex>
+  );
+};
+
+export default Index;
