@@ -14,13 +14,16 @@ import Head from "next/head";
 import React, { useState } from "react";
 import { BsFacebook, BsGithub, BsGoogle, BsTwitter } from "react-icons/bs";
 import bg from "../public/bacakground.png";
+import { signIn, useSession } from "next-auth/react";
 
 const Index = () => {
   const [show, setShow] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const { data } = useSession();
   const handlePasswordClick = () => {
     setShow((state) => !state);
+    console.log(data?.user);
   };
   return (
     <Flex
@@ -120,10 +123,26 @@ const Index = () => {
             <Divider />
           </Flex>
           <HStack marginX="auto">
-            <Button variant="outline" leftIcon={<BsGoogle />}>
+            <Button
+              variant="outline"
+              onClick={() =>
+                signIn("google", {
+                  callbackUrl: "http://localhost:3000/cairo",
+                })
+              }
+              leftIcon={<BsGoogle />}
+            >
               Google
             </Button>
-            <Button variant="outline" leftIcon={<BsGithub />}>
+            <Button
+              variant="outline"
+              onClick={() =>
+                signIn("github", {
+                  callbackUrl: "http://localhost:3000/cairo",
+                })
+              }
+              leftIcon={<BsGithub />}
+            >
               Github
             </Button>
           </HStack>
