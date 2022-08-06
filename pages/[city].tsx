@@ -96,7 +96,8 @@ const Home: NextPage<Forecast> = ({
 
     axios
       .get(
-        `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${long}&key=${process.env.OPEN_CAGE_API}`
+        "https://api.opencagedata.com/geocode/v1/json?q=${lat}+${long}&key=" +
+          process.env.OPEN_CAGE_API
       )
       .then((res) => {
         setCity(res.data.results[0].components.city);
