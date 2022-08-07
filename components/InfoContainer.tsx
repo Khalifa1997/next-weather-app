@@ -6,18 +6,14 @@ type Props = {
   padding?: number;
 };
 
-const InfoContainer = ({
-  children,
-  bgColor,
-  padding,
-}: Props): React.ReactNode => {
+const InfoContainer = ({ children, bgColor, padding }: Props): JSX.Element => {
   return (
     <Box
       bg={bgColor ? bgColor : "white"}
       border="2px"
       borderColor="gray.400"
       borderRadius="md"
-      width="fit-content"
+      width="inherit"
       m={4}
     >
       {children}
