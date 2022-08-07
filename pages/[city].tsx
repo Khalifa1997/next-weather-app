@@ -13,6 +13,7 @@ import { Forecast } from "../types";
 import { useSession } from "next-auth/react";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
+import WindContainer from "../components/WindContainer";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   let x = {} as Forecast;
@@ -45,6 +46,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         humidity: res.data.list[0].main.humidity,
         sunset: res.data.city.sunset + res.data.city.timezone,
         sunrise: res.data.city.sunrise + res.data.city.timezone,
+        visibility: res.data.list[0].visibility,
+        windDir: res.data.list[0].wind.deg,
+        windSpeed: res.data.list[0].wind.speed,
         time: res.data.list[0].dt,
         hourlyWeather: res.data.list.slice(1, 8).map((el: any) => {
           return {
@@ -86,6 +90,8 @@ const Home: NextPage<Forecast> = ({
   time,
   hourlyWeather,
   dailyWeather,
+  windDir,
+  windSpeed,
 }: Forecast) => {
   const router = useRouter();
   const { data } = useSession();
@@ -106,7 +112,7 @@ const Home: NextPage<Forecast> = ({
     axios
       .get(
         "https://api.opencagedata.com/geocode/v1/json?q=${lat}+${long}&key=" +
-          process.env.OPEN_CAGE_API
+          process.env.NEXT_PUBLIC_OPEN_CAGE_API
       )
       .then((res) => {
         setCity(res.data.results[0].components.city);
@@ -117,7 +123,6 @@ const Home: NextPage<Forecast> = ({
     console.log(data);
     if (city) router.push(`/${city}`);
   }, [city]);
-  const googleMapsAPI = `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API}&libraries=places`;
   if (!data) return <p>Not Signed In Page</p>;
   return (
     <Box bgColor="primary.100" height="100vh">
@@ -125,7 +130,11 @@ const Home: NextPage<Forecast> = ({
         <title>AccuWeather - {city}</title>
       </Head>
       <Script
-        src={googleMapsAPI}
+        src={
+          "https://maps.googleapis.com/maps/api/js?key=" +
+          process.env.NEXT_PUBLIC_GOOGLE_MAPS_API +
+          "&libraries=places"
+        }
         onLoad={() => setGoogleApiLoaded(true)}
       ></Script>
       {googleApiLoaded && <NavBar setInputCity={setCity} />}
@@ -148,12 +157,15 @@ const Home: NextPage<Forecast> = ({
           gap={{ base: 10, md: 10, lg: 40 }}
           marginTop={4}
         >
-          <SunContainer
-            sunrise={sunrise!}
-            sunset={sunset!}
-            humidity={humidity!}
-            UV={uv!}
-          ></SunContainer>
+          <Flex direction="column">
+            <SunContainer
+              sunrise={sunrise!}
+              sunset={sunset!}
+              humidity={humidity!}
+              UV={uv!}
+            ></SunContainer>
+            <WindContainer windDir={windDir!} windSpeed={windSpeed!} />
+          </Flex>
           <Chart hourlyWeather={hourlyWeather!} dailyWeather={dailyWeather!} />
         </Flex>
       </Box>
