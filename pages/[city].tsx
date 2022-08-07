@@ -138,10 +138,14 @@ const Home: NextPage<Forecast> = ({
         <WeatherForecast time={time} temperature={temp} location={name} />
 
         <Flex
-          direction="row"
-          justifyContent="space-between"
+          direction={{ base: "column", md: "column", lg: "row" }}
+          justifyContent={{
+            base: "center",
+            md: "space-around",
+            lg: "space-around",
+          }}
           alignItems="center"
-          gap={40}
+          gap={{ base: 10, md: 10, lg: 40 }}
           marginTop={4}
         >
           <SunContainer

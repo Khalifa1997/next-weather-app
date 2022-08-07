@@ -59,11 +59,8 @@ const NavBar = ({ setInputCity }: Props) => {
     }
   };
   const {
-    ready,
-    value,
     suggestions: { status, data },
     setValue,
-    clearSuggestions,
   } = usePlacesAutocomplete({
     requestOptions: {
       types: ["(cities)"],
@@ -78,13 +75,18 @@ const NavBar = ({ setInputCity }: Props) => {
       height={20}
       justifyContent="space-between"
     >
-      <Text ml={20} fontSize="3xl" color="primary.900" as="b">
+      <Text
+        ml={{ base: 10, md: 10, lg: 20 }}
+        fontSize="3xl"
+        color="primary.900"
+        as="b"
+      >
         AccuWeather
       </Text>
       <InputGroup
         bg="white"
-        maxWidth="20%"
-        mr={10}
+        maxWidth={{ base: "40%", md: "40%", lg: "20%" }}
+        mr={[5, 10, 10]}
         position="relative"
         ref={ref}
       >
