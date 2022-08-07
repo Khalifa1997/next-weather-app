@@ -12,6 +12,9 @@ export interface Weather {
   humidity?: number;
   sunset?: number;
   sunrise?: number;
+  visibility?: number;
+  windSpeed?: number;
+  windDir?: number;
   time: number;
 }
 
