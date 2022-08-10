@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Chart from "../components/Chart";
 import { Forecast } from "../types";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
 import WindContainer from "../components/WindContainer";
@@ -18,6 +18,15 @@ import WindContainer from "../components/WindContainer";
 export const getServerSideProps: GetServerSideProps = async (context) => {
   let x = {} as Forecast;
   const { params } = context;
+  const session = await getSession(context);
+  console.log(session);
+  if (!session)
+    return {
+      redirect: {
+        destination: "/unauthorized",
+        permanent: false,
+      },
+    };
   await axios
     .get(
       `https://api.openweathermap.org/data/2.5/forecast?q=${
@@ -123,7 +132,6 @@ const Home: NextPage<Forecast> = ({
     console.log(data);
     if (city) router.push(`/${city}`);
   }, [city]);
-  if (!data) return <p>Not Signed In Page</p>;
   return (
     <Box bgColor="primary.100" height="100vh">
       <Head>
