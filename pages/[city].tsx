@@ -18,6 +18,7 @@ import WindContainer from "../components/WindContainer";
 export const getServerSideProps: GetServerSideProps = async (context) => {
   let x = {} as Forecast;
   const { params } = context;
+  let error = false;
   const session = await getSession(context);
   console.log(session);
   if (!session)
@@ -45,7 +46,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             },
           }
         )
-        .then((res) => (x = { ...x, uv: res.data.result.uv }))
+        .then((res) => {
+          x = { ...x, uv: res.data.result.uv };
+        })
         .catch(() => (x = { ...x, uv: -1 }));
       x = {
         ...x,
@@ -76,17 +79,25 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             };
           }),
       };
+    })
+    .catch(async () => {
+      error = true;
     });
-  return {
-    props: {
-      session: await unstable_getServerSession(
-        context.req,
-        context.res,
-        authOptions
-      ),
-      ...x!,
-    },
-  };
+  if (error)
+    return {
+      notFound: true,
+    };
+  else
+    return {
+      props: {
+        session: await unstable_getServerSession(
+          context.req,
+          context.res,
+          authOptions
+        ),
+        ...x!,
+      },
+    };
 };
 
 const Home: NextPage<Forecast> = ({
