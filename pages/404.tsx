@@ -1,4 +1,4 @@
-import { Button, Flex } from "@chakra-ui/react";
+import { Button, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -16,7 +16,9 @@ const Custom404 = () => {
       minWidth="100%"
     >
       <Image src={image404} height={900} width={900} />
-
+      <Text fontSize="4xl" my="3">
+        The Page you requested could not be found.
+      </Text>
       <Button size="lg" onClick={() => router.back()}>
         Go back
       </Button>
