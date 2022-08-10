@@ -15,7 +15,7 @@ const Custom404 = () => {
       alignItems="center"
       minWidth="100%"
     >
-      <Image src={image404} height={900} width={900} />
+      <Image src={image404} height={900} width={900} alt="404" />
       <Text fontSize="4xl" my="3">
         The Page you requested could not be found.
       </Text>
