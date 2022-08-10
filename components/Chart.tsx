@@ -147,7 +147,7 @@ const Chart = ({ hourlyWeather, dailyWeather }: Props) => {
       fontFamily="sans-serif"
       textAlign="center"
       bg="white"
-      width={{ base: 500, md: 600, lg: 700 }}
+      width={{ base: 500, md: 600, lg: 600 }}
       borderRadius={6}
       marginX={{ base: 5, md: 5, lg: 0 }}
       border="2px"

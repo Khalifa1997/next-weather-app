@@ -133,7 +133,7 @@ const Home: NextPage<Forecast> = ({
     if (city) router.push(`/${city}`);
   }, [city]);
   return (
-    <Box bgColor="primary.100" height="100vh">
+    <Box bgColor="primary.100" minHeight="100%">
       <Head>
         <title>AccuWeather - {city}</title>
       </Head>
