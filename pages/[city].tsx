@@ -62,6 +62,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         windDir: res.data.list[0].wind.deg,
         windSpeed: res.data.list[0].wind.speed,
         time: res.data.list[0].dt,
+        condition: res.data.list[0].weather[0].main,
         hourlyWeather: res.data.list.slice(1, 8).map((el: any) => {
           return {
             time: el.dt_txt.split(" ")[1].slice(0, -3),
@@ -112,6 +113,7 @@ const Home: NextPage<Forecast> = ({
   dailyWeather,
   windDir,
   windSpeed,
+  condition,
 }: Forecast) => {
   const router = useRouter();
   const { data } = useSession();
@@ -163,7 +165,12 @@ const Home: NextPage<Forecast> = ({
         alignItems="center"
         flexDirection="column"
       >
-        <WeatherForecast time={time} temperature={temp} location={name} />
+        <WeatherForecast
+          time={time}
+          temperature={temp}
+          location={name}
+          condition={condition}
+        />
 
         <Flex
           direction={{ base: "column", md: "column", lg: "row" }}

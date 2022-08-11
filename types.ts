@@ -16,6 +16,7 @@ export interface Weather {
   windSpeed?: number;
   windDir?: number;
   time: number;
+  condition: string;
 }
 
 export interface Forecast extends Weather {

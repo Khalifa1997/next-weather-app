@@ -1,19 +1,66 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 import sunny from "../public/sunny.jpg";
-import Thunderstorm from "../public/Thunderstorm.jpg";
-import rain from "../public/drizzle.jpg";
+import thunderstorm from "../public/Thunderstorm.jpg";
+import rain from "../public/rain.jpg";
+import drizzle from "../public/drizzle.jpg";
+import snow from "../public/snow.jpg";
+import cloud from "../public/cloud.jpg";
 
-import { BsSunFill, BsCloudRainFill, BsSnow } from "react-icons/bs";
+import {
+  BsSunFill,
+  BsCloudRainFill,
+  BsSnow,
+  BsFillCloudRainHeavyFill,
+  BsCloudDrizzleFill,
+  BsFillCloudLightningRainFill,
+  BsCloudsFill,
+} from "react-icons/bs";
 import { convertTime, weekday } from "../commons";
+import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 type Props = {
   weather?: string;
   temperature: number;
   location?: string;
   time?: number;
+  condition: string;
 };
-const WeatherForecast = ({ weather, temperature, location, time }: Props) => {
+const WeatherForecast = ({
+  weather,
+  temperature,
+  location,
+  time,
+  condition,
+}: Props) => {
   const dayName = weekday[new Date(time!).getDay() % 7];
+  let src = "";
+  let icon: ReactJSXElement;
+  console.log(condition);
+  if (condition.toLowerCase().includes("rain")) {
+    src = rain.src;
+    icon = <BsFillCloudRainHeavyFill color="white" size={55} />;
+  } else if (condition.toLowerCase().includes("drizzle")) {
+    src = drizzle.src;
+    icon = <BsCloudDrizzleFill color="white" size={55} />;
+  } else if (condition.toLowerCase().includes("snow")) {
+    src = snow.src;
+    icon = <BsSnow color="white" size={55} />;
+  } else if (
+    condition.toLowerCase().includes("sunny") ||
+    condition.toLowerCase().includes("clear")
+  ) {
+    src = sunny.src;
+    icon = <BsSunFill color="white" size={55} />;
+  } else if (condition.toLowerCase().includes("thunderstorm")) {
+    src = thunderstorm.src;
+    icon = <BsFillCloudLightningRainFill color="white" size={55} />;
+  } else if (condition.toLowerCase().includes("cloud")) {
+    src = cloud.src;
+    icon = <BsCloudsFill color="white" size={55} />;
+  } else {
+    src = cloud.src;
+    icon = <BsCloudsFill color="white" size={55} />;
+  }
   return (
     <Box
       minH={450}
@@ -23,7 +70,7 @@ const WeatherForecast = ({ weather, temperature, location, time }: Props) => {
       backgroundRepeat="no-repeat"
       backgroundPosition="center"
       backgroundSize="cover"
-      backgroundImage={`url(${rain.src})`}
+      backgroundImage={`url(${src})`}
       borderRadius="6px"
       position="relative"
     >
@@ -36,7 +83,7 @@ const WeatherForecast = ({ weather, temperature, location, time }: Props) => {
         justifyContent="space-between"
       >
         <Box position="absolute" bottom="0px" left="20px">
-          <BsSnow color="white" size={55} />
+          {icon}
 
           <Text color="whiteAlpha.800" fontSize="5xl">
             {Math.round(temperature)}
