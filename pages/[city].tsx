@@ -61,7 +61,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         visibility: res.data.list[0].visibility,
         windDir: res.data.list[0].wind.deg,
         windSpeed: res.data.list[0].wind.speed,
-        time: res.data.list[0].dt,
+        time: res.data.city.timezone,
         hourlyWeather: res.data.list.slice(1, 8).map((el: any) => {
           return {
             time: el.dt_txt.split(" ")[1].slice(0, -3),
@@ -180,7 +180,7 @@ const Home: NextPage<Forecast> = ({
             <SunContainer
               sunrise={sunrise!}
               sunset={sunset!}
-              humidity={humidity!}
+              humidity={humidity! + time!}
               UV={uv!}
             ></SunContainer>
             <WindContainer windDir={windDir!} windSpeed={windSpeed!} />

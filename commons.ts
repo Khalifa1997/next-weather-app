@@ -1,11 +1,18 @@
+import moment from "moment";
+
 export const convertTime = (timeStamp: number) => {
-  const date = new Date(timeStamp * 1000);
-  const hours = date.getHours().toString();
-  const mins = date.getMinutes().toString();
+  const currTime = moment().utcOffset(timeStamp / 60);
 
   return {
-    hours: hours.length === 1 ? "0" + hours : hours,
-    mins: mins.length === 1 ? "0" + mins : mins,
+    hours:
+      currTime.hours().toString().length === 1
+        ? "0" + currTime.hours().toString()
+        : currTime.hours(),
+    mins:
+      currTime.minutes().toString().length === 1
+        ? "0" + currTime.minutes().toString()
+        : currTime.minutes(),
+    weekday: currTime.weekday(),
   };
 };
 
@@ -276,7 +283,7 @@ export const cleanUpSpecialChars = (str: string) => {
 
   return str;
 };
-export const weekday = [
+export const weekDays = [
   "Sunday",
   "Monday",
   "Tuesday",

@@ -11,9 +11,19 @@ type Props = {
   sunrise: number;
 };
 
+const cc = (timeStamp: number) => {
+  const date = new Date(timeStamp * 1000);
+  const hours = date.getHours().toString();
+  const mins = date.getMinutes().toString();
+
+  return {
+    hours: hours.length === 1 ? "0" + hours : hours,
+    mins: mins.length === 1 ? "0" + mins : mins,
+  };
+};
 const SunContainer = ({ humidity, UV, sunrise, sunset }: Props) => {
-  const sunriseTime = convertTime(sunrise);
-  const sunsetTime = convertTime(sunset);
+  const sunriseTime = cc(sunrise);
+  const sunsetTime = cc(sunset);
 
   return (
     <InfoContainer>

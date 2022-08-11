@@ -5,7 +5,8 @@ import Thunderstorm from "../public/Thunderstorm.jpg";
 import rain from "../public/drizzle.jpg";
 
 import { BsSunFill, BsCloudRainFill, BsSnow } from "react-icons/bs";
-import { convertTime, weekday } from "../commons";
+import { convertTime, weekDays } from "../commons";
+import moment from "moment";
 type Props = {
   weather?: string;
   temperature: number;
@@ -13,7 +14,8 @@ type Props = {
   time?: number;
 };
 const WeatherForecast = ({ weather, temperature, location, time }: Props) => {
-  const dayName = weekday[new Date(time!).getDay() % 7];
+  const { weekday, mins, hours } = convertTime(time!);
+  const dayname = weekDays[weekday];
   return (
     <Box
       minH={450}
@@ -47,10 +49,10 @@ const WeatherForecast = ({ weather, temperature, location, time }: Props) => {
         </Box>
         <Box position="absolute" bottom="0px" right="20px" textAlign="right">
           <Text color="whiteAlpha.900" fontSize="2xl" width="100%">
-            {convertTime(time!).hours}:{convertTime(time!).mins}
+            {hours}:{mins}
           </Text>
           <Text color="whiteAlpha.700" fontSize="2xl">
-            {dayName}
+            {dayname}
           </Text>
         </Box>
       </Flex>

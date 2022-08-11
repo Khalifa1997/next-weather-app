@@ -18,7 +18,7 @@ import {
   ChartData,
 } from "chart.js";
 import WeatherIconPicker from "./WeatherIconPicker";
-import { weekday } from "../commons";
+import { weekDays } from "../commons";
 
 ChartJS.register(
   CategoryScale,
@@ -175,7 +175,7 @@ const Chart = ({ hourlyWeather, dailyWeather }: Props) => {
                 textAlign="center"
                 color="blackAlpha.700"
               >
-                {weekday[new Date(el.time * 1000).getDay() % 7]}
+                {weekDays[new Date(el.time * 1000).getDay() % 7]}
               </Text>
               <WeatherIconPicker condition={el.condition} />
               <Text as="b" fontSize="large" marginTop={5} textAlign="center">
