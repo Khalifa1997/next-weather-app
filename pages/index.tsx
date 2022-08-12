@@ -39,7 +39,6 @@ const Index = () => {
   const handlePasswordClick = () => {
     setShow((state) => !state);
   };
-  return (
     <Flex
       height="100vh"
       width="100vw"
@@ -141,7 +140,7 @@ const Index = () => {
               variant="outline"
               onClick={() =>
                 signIn("google", {
-                  callbackUrl: "http://localhost:3000/cairo",
+                  callbackUrl: "/cairo",
                 })
               }
               leftIcon={<BsGoogle />}
@@ -150,9 +149,9 @@ const Index = () => {
             </Button>
             <Button
               variant="outline"
-              onClick={() =>
+              onClick={() => 
                 signIn("github", {
-                  callbackUrl: "http://localhost:3000/cairo",
+                  callbackUrl: "/cairo",
                 })
               }
               leftIcon={<BsGithub />}
