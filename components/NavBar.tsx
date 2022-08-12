@@ -90,17 +90,17 @@ const NavBar = ({ setInputCity }: Props) => {
         position="relative"
         ref={ref}
       >
-        <InputRightElement
-          pointerEvents="none"
-          children={<BsSearch color="gray" />}
-        />
+        <InputRightElement pointerEvents="none">
+          <BsSearch color="gray" />
+        </InputRightElement>
         {currentCity.length > 0 && (
           <InputRightElement
             cursor="pointer"
             onClick={() => setCurrentCity("")}
             mr="5"
-            children={<BsX color="gray" />}
-          />
+          >
+            <BsX color="gray" />
+          </InputRightElement>
         )}
         <Input
           placeholder="Enter City Name"
