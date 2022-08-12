@@ -14,5 +14,10 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
+  callbacks: {
+    redirect: async ({ url, baseUrl }) => {
+      return Promise.resolve(baseUrl);
+    },
+  },
 };
 export default NextAuth(authOptions);
