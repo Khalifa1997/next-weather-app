@@ -35,7 +35,7 @@ const WeatherForecast = ({
   const dayName = weekday[new Date(time!).getDay() % 7];
   let src = "";
   let icon: ReactJSXElement;
-  console.log(condition);
+
   if (condition.toLowerCase().includes("rain")) {
     src = rain.src;
     icon = <BsFillCloudRainHeavyFill color="white" size={55} />;

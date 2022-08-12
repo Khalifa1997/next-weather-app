@@ -133,7 +133,7 @@ const Home: NextPage<Forecast> = ({
 
     axios
       .get(
-        "https://api.opencagedata.com/geocode/v1/json?q=${lat}+${long}&key=" +
+        `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${long}&key=` +
           process.env.NEXT_PUBLIC_OPEN_CAGE_API
       )
       .then((res) => {
@@ -142,7 +142,6 @@ const Home: NextPage<Forecast> = ({
   }, [long, lat]);
 
   useEffect(() => {
-    console.log(data);
     if (city) router.push(`/${city}`);
   }, [city]);
   return (

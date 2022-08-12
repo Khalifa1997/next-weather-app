@@ -19,7 +19,7 @@ import type { GetServerSideProps } from "next";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
-  console.log(session);
+
   if (session)
     return {
       redirect: {
@@ -38,7 +38,6 @@ const Index = () => {
   const { data } = useSession();
   const handlePasswordClick = () => {
     setShow((state) => !state);
-    console.log(data?.user);
   };
   return (
     <Flex
