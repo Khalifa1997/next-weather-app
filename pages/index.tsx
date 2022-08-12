@@ -12,10 +12,25 @@ import {
 } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { useState } from "react";
-import { BsFacebook, BsGithub, BsGoogle, BsTwitter } from "react-icons/bs";
+import { BsGithub, BsGoogle } from "react-icons/bs";
 import bg from "../public/bacakground.png";
-import { signIn, useSession } from "next-auth/react";
+import { getSession, signIn, useSession } from "next-auth/react";
+import type { GetServerSideProps } from "next";
 
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context);
+  console.log(session);
+  if (session)
+    return {
+      redirect: {
+        destination: "/cairo",
+        permanent: false,
+      },
+    };
+  return {
+    props: {},
+  };
+};
 const Index = () => {
   const [show, setShow] = useState(false);
   const [password, setPassword] = useState("");
