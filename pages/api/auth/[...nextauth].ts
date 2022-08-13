@@ -16,7 +16,7 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     redirect: async ({ url, baseUrl }) => {
-      return baseUrl;
+      return Promise.resolve(baseUrl);
     },
   },
 };
