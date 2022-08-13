@@ -9,20 +9,19 @@ import cloud from "../public/cloud.jpg";
 
 import {
   BsSunFill,
-  BsCloudRainFill,
   BsSnow,
   BsFillCloudRainHeavyFill,
   BsCloudDrizzleFill,
   BsFillCloudLightningRainFill,
   BsCloudsFill,
 } from "react-icons/bs";
-import { convertTime, weekday } from "../commons";
+import { formatTime, weekday } from "../commons";
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 type Props = {
   weather?: string;
   temperature: number;
   location?: string;
-  time?: number;
+  time?: string;
   condition: string;
 };
 const WeatherForecast = ({
@@ -32,7 +31,10 @@ const WeatherForecast = ({
   time,
   condition,
 }: Props) => {
-  const dayName = weekday[new Date(time!).getDay() % 7];
+  const date = new Date(JSON.parse(time!));
+  const dayName = weekday[date.getDay() % 7];
+  const hours = formatTime(date.getHours());
+  const mins = formatTime(date.getMinutes());
   let src = "";
   let icon: ReactJSXElement;
 
@@ -63,8 +65,8 @@ const WeatherForecast = ({
   }
   return (
     <Box
-      minH={450}
-      maxH={700}
+      minH={350}
+      maxH={600}
       bgColor="primary.f9f8fe"
       w="95%"
       backgroundRepeat="no-repeat"
@@ -94,7 +96,7 @@ const WeatherForecast = ({
         </Box>
         <Box position="absolute" bottom="0px" right="20px" textAlign="right">
           <Text color="whiteAlpha.900" fontSize="2xl" width="100%">
-            {convertTime(time!).hours}:{convertTime(time!).mins}
+            {hours}:{mins}
           </Text>
           <Text color="whiteAlpha.700" fontSize="2xl">
             {dayName}
