@@ -140,14 +140,18 @@ const Index = () => {
           <HStack marginX="auto">
             <Button
               variant="outline"
-              onClick={() => signIn("google", { callbackUrl: "/cairo" })}
+              onClick={() =>
+                signIn("google", { redirect: false, callbackUrl: "/cairo" })
+              }
               leftIcon={<BsGoogle />}
             >
               Google
             </Button>
             <Button
               variant="outline"
-              onClick={() => signIn("github", { callbackUrl: "/cairo" })}
+              onClick={() =>
+                signIn("github", { redirect: false, callbackUrl: "/cairo" })
+              }
               leftIcon={<BsGithub />}
             >
               Github
