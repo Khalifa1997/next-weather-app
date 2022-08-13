@@ -142,6 +142,7 @@ const Index = () => {
               variant="outline"
               onClick={() =>
                 signIn("google", {
+                  redirect: false,
                   callbackUrl: "/cairo",
                 })
               }
@@ -153,6 +154,7 @@ const Index = () => {
               variant="outline"
               onClick={() =>
                 signIn("github", {
+                  redirect: false,
                   callbackUrl: "/cairo",
                 })
               }
