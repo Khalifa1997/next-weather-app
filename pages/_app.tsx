@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider
       session={session}
-      basePath="https://next-weather-app-dusky.vercel.app/api/auth"
+      baseUrl="https://next-weather-app-dusky.vercel.app/"
     >
       <ChakraProvider theme={theme}>
         <Component {...pageProps} />
