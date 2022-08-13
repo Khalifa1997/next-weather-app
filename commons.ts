@@ -4,11 +4,13 @@ export const convertTime = (timeStamp: number) => {
   const mins = date.getMinutes().toString();
 
   return {
-    hours: hours.length === 1 ? "0" + hours : hours,
-    mins: mins.length === 1 ? "0" + mins : mins,
+    hours: formatTime(hours),
+    mins: formatTime(mins),
   };
 };
-
+export const formatTime = (time: number | string) => {
+  return time.toString().length === 1 ? "0" + time : time;
+};
 export const cleanUpSpecialChars = (str: string) => {
   const defaultDiacriticsRemovalMap = [
     {
