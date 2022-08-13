@@ -50,18 +50,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           x = { ...x, uv: res.data.result.uv };
         })
         .catch(() => (x = { ...x, uv: -1 }));
+      const now = new Date();
+      const offset = now.getTimezoneOffset();
       x = {
         ...x,
         name: res.data.city.name,
         weather: res.data.list[0].weather[0].main,
         temp: res.data.list[0].main.temp,
         humidity: res.data.list[0].main.humidity,
-        sunset: res.data.city.sunset + res.data.city.timezone,
-        sunrise: res.data.city.sunrise + res.data.city.timezone,
+        sunset: res.data.city.sunset,
+        sunrise: res.data.city.sunrise,
         visibility: res.data.list[0].visibility,
         windDir: res.data.list[0].wind.deg,
         windSpeed: res.data.list[0].wind.speed,
-        time: res.data.list[0].dt,
+        time: JSON.stringify(
+          new Date(
+            now.getTime() + offset * 60 * 1000 + res.data.city.timezone * 1000
+          )
+        ), //res.data.list[0].dt + res.data.city.timezone,
         condition: res.data.list[0].weather[0].main,
         hourlyWeather: res.data.list.slice(1, 8).map((el: any) => {
           return {
