@@ -137,7 +137,8 @@ const Home: NextPage<Forecast> = ({
           process.env.NEXT_PUBLIC_OPEN_CAGE_API
       )
       .then((res) => {
-        setCity(res.data.results[0].components.city);
+        if (res.data.results[0].components.city)
+          setCity(res.data.results[0].components.city);
       });
   }, [long, lat]);
 

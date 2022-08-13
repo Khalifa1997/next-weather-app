@@ -150,7 +150,7 @@ const Chart = ({ hourlyWeather, dailyWeather }: Props) => {
       width={{ base: 500, md: 600, lg: 600 }}
       borderRadius={6}
       marginX={{ base: 5, md: 5, lg: 0 }}
-      mb={{ base: 5, md: 5, lg: 0 }}
+      mb={5}
       border="2px"
       borderColor="gray.400"
       bgColor="primary.f9f8fe"
