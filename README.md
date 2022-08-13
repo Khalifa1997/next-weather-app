@@ -1,6 +1,6 @@
 
-<p align="center" text-align: "justify" >
-<img src="https://img.shields.io/github/followers/Khalifa1997?style=social"/>
+<p  align="center">
+<a href="https://img.shields.io/github/followers/Khalifa1997?style=social"><img src="https://img.shields.io/github/followers/Khalifa1997?style=social"/></a>
 </p>
 <p align="center" text-align: "justify" >
 <img src="https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white"/>
