@@ -15,7 +15,7 @@ export interface Weather {
   visibility?: number;
   windSpeed?: number;
   windDir?: number;
-  time: number;
+  time: string;
   condition: string;
 }
 
