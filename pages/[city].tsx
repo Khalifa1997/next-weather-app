@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { params } = context;
   let error = false;
   const session = await getSession(context);
-  console.log(session);
+
   if (!session)
     return {
       redirect: {
