@@ -142,7 +142,7 @@ const Index = () => {
               variant="outline"
               onClick={() =>
                 signIn("google", {
-                  callbackUrl: "/cairo",
+                  callbackUrl: process.env.NEXTAUTH_URL + "cairo",
                 })
               }
               leftIcon={<BsGoogle />}
@@ -153,7 +153,7 @@ const Index = () => {
               variant="outline"
               onClick={() =>
                 signIn("github", {
-                  callbackUrl: "/cairo",
+                  callbackUrl: process.env.NEXTAUTH_URL + "cairo",
                 })
               }
               leftIcon={<BsGithub />}
