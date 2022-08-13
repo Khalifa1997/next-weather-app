@@ -21,10 +21,7 @@ const theme = extendTheme({
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <SessionProvider
-      session={session}
-      baseUrl="https://next-weather-app-dusky.vercel.app/"
-    >
+    <SessionProvider session={session}>
       <ChakraProvider theme={theme}>
         <Component {...pageProps} />
       </ChakraProvider>
