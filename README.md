@@ -25,7 +25,10 @@ As the SSR gaining as much traction as they ever have, I wanted to build this pr
 Also this was a very good chance to learn Next-Auth since I have heard very good reviews about it, this plus `Chart.js` were very fruitful additions to the project.
 
 ## Tech Stack
+#### Frameworks
 `Next.js`, `React`, `Chakra-UI`, `Next-Auth` and `Chart.js`
+#### APIs
+`Openweathermap` , `OpenUV`, `Google Places API` and `OpenCage` API
 
 ## Screenshots
 
