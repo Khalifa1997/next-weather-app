@@ -19,6 +19,7 @@ import type { GetServerSideProps } from "next";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
+  console.log(process.env.NEXTAUTH_URL);
 
   if (session)
     return {
