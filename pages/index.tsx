@@ -40,8 +40,8 @@ const Index = () => {
   const handlePasswordClick = () => {
     setShow((state) => !state);
   };
-  const handleLogin: FormEventHandler<HTMLInputElement> = async (
-    e: React.FormEvent<HTMLInputElement>
+  const handleLogin: FormEventHandler<HTMLButtonElement> = async (
+    e: React.FormEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
     await signIn("credentials", { email, password });
