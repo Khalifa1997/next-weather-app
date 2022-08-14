@@ -11,7 +11,7 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { FormEventHandler, useState } from "react";
 import { BsGithub, BsGoogle } from "react-icons/bs";
 import bg from "../public/bacakground.png";
 import { getSession, signIn, useSession } from "next-auth/react";
@@ -40,7 +40,9 @@ const Index = () => {
   const handlePasswordClick = () => {
     setShow((state) => !state);
   };
-  const handleLogin = async (e: React.FormEvent<HTMLInputElement>) => {
+  const handleLogin: FormEventHandler<HTMLInputElement> = async (
+    e: React.FormEvent<HTMLInputElement>
+  ) => {
     e.preventDefault();
     await signIn("credentials", { email, password });
   };
