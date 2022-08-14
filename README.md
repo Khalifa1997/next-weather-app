@@ -49,6 +49,12 @@ To Start Server:
 
 Signup with Email, Github or Google, to be redirected to the homepage
 
+You can signin with there credentials:
+```
+email: test@test.com
+password: test
+```
+
 Tadaaa, It should be up and running now!🎉🎉
 
 ## Future Improvements
