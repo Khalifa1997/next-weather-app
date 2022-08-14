@@ -40,6 +40,10 @@ const Index = () => {
   const handlePasswordClick = () => {
     setShow((state) => !state);
   };
+  const handleLogin = async (e: React.FormEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    await signIn("credentials", { email, password });
+  };
   return (
     <Flex
       height="100vh"
@@ -65,6 +69,7 @@ const Index = () => {
         ml={["auto", "auto", "20px"]}
         direction="column"
         backgroundColor="#fefefe"
+        mx={[2, 3, 4]}
       >
         <Text textAlign="center" fontSize="4xl">
           Log in
@@ -77,8 +82,6 @@ const Index = () => {
             borderRadius="20px"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            htmlSize={40}
-            width="auto"
             type="email"
           />
           <Text textAlign="left" fontSize="medium" marginY="2">
@@ -90,10 +93,8 @@ const Index = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               type={show ? "text" : "password"}
-              htmlSize={40}
-              width="auto"
             />
-            <InputRightElement width="4.5rem">
+            <InputRightElement width="3.5rem">
               <Button h="1.5rem" size="xs" onClick={handlePasswordClick}>
                 {show ? "Hide" : "Show"}
               </Button>
@@ -114,25 +115,27 @@ const Index = () => {
               boxShadow:
                 "0 0 1px 2px rgba(88, 144, 255, .75), 0 1px 1px rgba(0, 0, 0, .15)",
             }}
+            onClick={handleLogin}
           >
             Login
           </Button>
           <Flex
-            gap="40px"
+            gap={["20px", "20px", "40px"]}
+            flexDirection={["column", "row", "row"]}
             justifyContent="center"
             alignItems="center"
             mt="25px"
           >
-            <Checkbox ml="20px" size="md">
+            <Checkbox ml={["0px", "10px", "20px"]} size="md">
               Keep me logged in
             </Checkbox>
-            <Text mr="20px" color="#5f9fcf">
+            <Text mr={["0px", "20px", "20px"]} color="#5f9fcf">
               Forgot Password or Email?
             </Text>
           </Flex>
           <Flex align="center">
             <Divider />
-            <Text padding="2" width="300px">
+            <Text padding="2" width={["350px", "300px"]}>
               Or Login With
             </Text>
             <Divider />

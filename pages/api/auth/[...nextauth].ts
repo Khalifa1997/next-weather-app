@@ -1,10 +1,34 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { NextAuthOptions, User } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.SECRET,
   providers: [
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        username: { label: "E-mail", type: "email" },
+        password: { label: "Password", type: "password" },
+      },
+
+      authorize(credentials) {
+        const user: User = {
+          id: "1",
+          name: "John Doe",
+          email: "test@test.com",
+          image: "null",
+        };
+
+        if (
+          credentials?.email === "test@test.com" &&
+          credentials.password === "test"
+        )
+          return user;
+        return null;
+      },
+    }),
     GithubProvider({
       clientId: process.env.GITHUB_ID!,
       clientSecret: process.env.GITHUB_SECRET!,
