@@ -39,6 +39,7 @@ const Index = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [signInError, setSignInError] = useState(false);
 
   const { data } = useSession();
   const handlePasswordClick = () => {
@@ -54,7 +55,12 @@ const Index = () => {
     setPasswordError(!checkValidPassword(password));
     if (emailError || passwordError) return;
 
-    await signIn("credentials", { email, password });
+    const res = await signIn("credentials", {
+      email,
+      password,
+    });
+    if (!res?.ok) setSignInError(true);
+    else setSignInError(false);
   };
   return (
     <Flex
@@ -116,9 +122,14 @@ const Index = () => {
               </Button>
             </InputRightElement>
           </InputGroup>
+          {signInError && (
+            <Text color="#f80404" mt={5}>
+              Error, please enter the correct Email and Password
+            </Text>
+          )}
           <Button
             size="lg"
-            mt="40px"
+            mt={signInError ? "20px" : "40px"}
             backgroundColor="#006eb9"
             borderRadius="20px"
             color="#f7fdfb"
