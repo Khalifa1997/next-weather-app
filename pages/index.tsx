@@ -16,6 +16,7 @@ import { BsGithub, BsGoogle } from "react-icons/bs";
 import bg from "../public/bacakground.png";
 import { getSession, signIn, useSession } from "next-auth/react";
 import type { GetServerSideProps } from "next";
+import { checkValidEmail, checkValidPassword } from "../commons";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
@@ -36,6 +37,9 @@ const Index = () => {
   const [show, setShow] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+
   const { data } = useSession();
   const handlePasswordClick = () => {
     setShow((state) => !state);
@@ -44,6 +48,12 @@ const Index = () => {
     e: React.FormEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
+    setEmailError(false);
+    setPasswordError(false);
+    setEmailError(!checkValidEmail(email));
+    setPasswordError(!checkValidPassword(password));
+    if (emailError || passwordError) return;
+
     await signIn("credentials", { email, password });
   };
   return (
@@ -84,6 +94,8 @@ const Index = () => {
             borderRadius="20px"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            isInvalid={emailError}
+            errorBorderColor="crimson"
             type="email"
           />
           <Text textAlign="left" fontSize="medium" marginY="2">
@@ -93,6 +105,8 @@ const Index = () => {
             <Input
               borderRadius="20px"
               value={password}
+              isInvalid={passwordError}
+              errorBorderColor="crimson"
               onChange={(e) => setPassword(e.target.value)}
               type={show ? "text" : "password"}
             />

@@ -11,6 +11,18 @@ export const convertTime = (timeStamp: number) => {
 export const formatTime = (time: number | string) => {
   return time.toString().length === 1 ? "0" + time : time;
 };
+export const checkValidEmail = (email: string) => {
+  return (
+    email.match(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    ) !== null
+  );
+};
+
+export const checkValidPassword = (password: string) => {
+  return password.length >= 4;
+};
+
 export const cleanUpSpecialChars = (str: string) => {
   const defaultDiacriticsRemovalMap = [
     {
